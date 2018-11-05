@@ -2,6 +2,9 @@
   <div class="container-fluid">
     <!-- #### Desktop用 #### -->
     <div class="desktop table-row header">
+      <b-row>
+        <label class="title" >メンバ一覧 </label>
+      </b-row>
       <b-row class='query-box'>
         <b-col cols="2">
           <form id="search">
@@ -12,7 +15,7 @@
         </b-col>
       </b-row>
       <div class="wrapper attributes header">
-        <div v-for="(val, idx) in columns" v-bind:key=idx @click="sortBy(val)" :class="[{ active: sortKey == val }, val]">
+        <div v-for="(val, idx) in columns" v-bind:key=idx @click="sortBy(val)" :class="[{ active: sortKey === val }, val]">
           {{ val }}
           <span class="arrow" :class="sortOrders[val] > 0 ? 'asc' : 'dsc'"></span>
         </div>
@@ -68,7 +71,7 @@ export default class ResponsiveScrollableGrid extends Vue {
   name: string = 'ResponsiveScrollableGrid';
   userName: string = 'admin';
   searchQuery: string = '';
-  sortKey: string = '';
+  sortKey: string = 'キー';
   memberList: object[] = [];
   columns: string[] = ['id', 'name', 'address'];
   sortOrders: object = {};
@@ -77,6 +80,7 @@ export default class ResponsiveScrollableGrid extends Vue {
   styleForNonSelectedRow: object = {'background-color': '#FFFFFF'};
 
   get members(): object[] {
+    console.log('members');
     let ret = this.memberList;
     const filterKey = this.searchQuery && this.searchQuery.toLowerCase();
     if (filterKey) {
@@ -88,7 +92,8 @@ export default class ResponsiveScrollableGrid extends Vue {
       });
     }
     const sortKey = this.sortKey;
-    const order = (this.sortOrders as any)[sortKey] || 1;
+    const order = (this.sortOrders as any)[sortKey] || -1;
+    console.log('sortKey : ' + sortKey + ', order : ' + order);
     if (sortKey) {
       // console.log('filterData by sortKey changed');
       ret = ret.slice().sort((a, b) => {
@@ -120,8 +125,9 @@ export default class ResponsiveScrollableGrid extends Vue {
   sortBy(key: string): void {
     console.log('sortBy : ' + key);
     this.sortKey = key;
-    (this.sortOrders as any)[key] = (this.sortOrders as any)[key] * -1;
-    console.log((this.sortOrders as any)[key]);
+    const sortOrders = Object.assign({}, this.sortOrders);
+    (sortOrders as any)[key] = (sortOrders as any)[key] * -1;
+    this.sortOrders = sortOrders;
   }
   edit(id: number): void {
     this.selectedId = id;
@@ -146,18 +152,24 @@ export default class ResponsiveScrollableGrid extends Vue {
     flex-grow: 0;
     -webkit-flex-grow: 0;
   }
+  .row {
+    margin-left: 0px;
+  }
   .table-row {
     border-bottom: 1px solid #e0e0e0;
     border-collapse: collapse;
+    margin-left: 0px;
+    margin-right: auto;
   }
   .table-row.header {
     background-color: rgb(229, 255, 219);
     font-weight: bold;
     padding-top: 6px;
     padding-bottom: 6px;
+    padding-left: 4px;
   }
   .wrapper.attributes.header {
-    height: 50px;
+    height: 20px;
   }
   .filter {
     width: 100%;
@@ -219,6 +231,9 @@ export default class ResponsiveScrollableGrid extends Vue {
    */
   @media screen and (max-device-width: 768px),screen and (max-width: 768px)
   {
+    .container {
+      padding-left: 4px;
+    }
     .wrapper.attributes.header {
       height: auto;
     }
