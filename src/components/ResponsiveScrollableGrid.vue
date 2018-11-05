@@ -65,6 +65,8 @@
 
 <script lang='ts'>
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import Member from '../models/Member'
+import SortOrders from '../models/SortOrders'
 
 @Component
 export default class ResponsiveScrollableGrid extends Vue {
@@ -72,9 +74,9 @@ export default class ResponsiveScrollableGrid extends Vue {
   userName: string = 'admin';
   searchQuery: string = '';
   sortKey: string = 'キー';
-  memberList: object[] = [];
+  memberList: Member[] = [];
   columns: string[] = ['id', 'name', 'address'];
-  sortOrders: object = {};
+  sortOrders: SortOrders = new SortOrders();
   selectedId: number = -1;
   styleForSelectedRow: object = {'background-color': '#C0C0C0'};
   styleForNonSelectedRow: object = {'background-color': '#FFFFFF'};
