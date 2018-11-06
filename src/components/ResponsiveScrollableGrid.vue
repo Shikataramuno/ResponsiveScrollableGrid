@@ -51,6 +51,7 @@
         <div class="table-row data" v-bind:style="[selectedId===entry.id ? styleForSelectedRow : idx%2 === 0 ? styleForNonSelectedEvenRow : styleForNonSelectedOddRow]">
           <div class="wrapper attributes data">
             <div v-for="(val, idx) in columns" v-bind:key=idx :class="[val]">
+              <span class='mobile-title'>{{val}}:</span>
               <span>
                 {{entry[val]}}
               </span>
@@ -217,6 +218,9 @@ export default class ResponsiveScrollableGrid extends Vue {
   margin-right: 0px;
   padding-top: 6px;
 }
+.mobile-title {
+  display: none;
+}
 .id {
   width: 100px;
   overflow: hidden;
@@ -286,6 +290,9 @@ export default class ResponsiveScrollableGrid extends Vue {
   }
   .wrapper.attributes.data {
     height: auto;
+  }
+  .mobile-title {
+    display: inline;
   }
   .attributes {
     flex-direction: column;
