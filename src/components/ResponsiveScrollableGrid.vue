@@ -83,7 +83,7 @@ export default class ResponsiveScrollableGrid extends Vue {
   styleForNonSelectedEvenRow: object = {'background-color': '#FFFFFF'};
   styleForNonSelectedOddRow: object = {'background-color': '#F5F5F5'};
 
-  get members(): object[] {
+  get members(): Member[] {
     let ret = this.memberList;
     const filterKey = this.searchQuery && this.searchQuery.toLowerCase();
     if (filterKey) {
