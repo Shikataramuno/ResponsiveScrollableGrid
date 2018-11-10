@@ -47,8 +47,8 @@
     </div>
 
     <div class="data-field">
-      <div v-for="(entry,idx) in members" v-bind:key=idx @click="edit(entry.id)">
-        <div class="table-row data" v-bind:style="[selectedId===entry.id ? styleForSelectedRow : idx%2 === 0 ? styleForNonSelectedEvenRow : styleForNonSelectedOddRow]">
+      <div v-for="(entry,idx) in members" v-bind:key=idx>
+        <div class="table-row data" v-bind:style="[selectedId===entry.id ? styleForSelectedRow : idx%2 === 0 ? styleForNonSelectedEvenRow : styleForNonSelectedOddRow]" @click="edit(entry.id)">
           <div class="wrapper attributes data">
             <div v-for="(val, idx) in columns" v-bind:key=idx :class="[val]">
               <span class='mobile-title'>{{val}}:</span>
