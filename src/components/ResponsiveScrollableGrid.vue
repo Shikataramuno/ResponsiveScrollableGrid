@@ -52,9 +52,12 @@
           <div class="wrapper attributes data">
             <div v-for="(val, idx) in columns" v-bind:key=idx :class="[val]">
               <span class='mobile-title'>{{val}}:</span>
-              <span>
-                {{entry[val]}}
-              </span>
+              <input type="checkbox"
+                v-if="val==='admin'"
+                v-model="admins"
+                v-bind:value="entry"
+                @change="adminChanged(entry)">
+              <span v-else>{{entry[val]}}</span>
             </div>
           </div>
         </div>
@@ -76,7 +79,8 @@ export default class ResponsiveScrollableGrid extends Vue {
   searchQuery: string = '';
   sortKey: string = 'キー';
   memberList: Member[] = [];
-  columns: string[] = ['id', 'name', 'address'];
+  columns: string[] = ['id', 'name', 'admin', 'address'];
+  admins: Member[] = [];
   sortOrders: SortOrders = new SortOrders();
   selectedId: number = -1;
   styleForSelectedRow: object = {'background-color': '#C0C0C0'};
@@ -104,33 +108,38 @@ export default class ResponsiveScrollableGrid extends Vue {
   created(): void {
     console.log('created');
     this.memberList = [
-     new Member(1, 'aaaa', 'aaaa@shikataramuno.com'),
-     new Member(2, 'bbbb', 'bbbb@shikataramuno.com'),
-     new Member(3, 'cccc', 'cccc@shikataramuno.com'),
-     new Member(4, 'dddd', 'dddd@shikataramuno.com'),
-     new Member(5, 'eeee', 'eeee@shikataramuno.com'),
-     new Member(6, 'ffff', 'ffff@shikataramuno.com'),
-     new Member(7, 'gggg', 'gggg@shikataramuno.com'),
-     new Member(8, 'hhhh', 'hhhh@shikataramuno.com'),
-     new Member(9, 'iiii', 'iiii@shikataramuno.com'),
-     new Member(10, 'jjjj', 'jjjj@shikataramuno.com'),
-     new Member(11, 'kkkk', 'kkkk@shikataramuno.com'),
-     new Member(12, 'llll', 'llll@shikataramuno.com'),
-     new Member(13, 'mmmm', 'mmmm@shikataramuno.com'),
-     new Member(14, 'nnnn', 'nnnn@shikataramuno.com'),
-     new Member(15, 'oooo', 'oooo@shikataramuno.com'),
-     new Member(16, 'pppp', 'pppp@shikataramuno.com'),
-     new Member(17, 'qqqq', 'qqqq@shikataramuno.com'),
-     new Member(18, 'rrrr', 'rrrr@shikataramuno.com'),
-     new Member(19, 'ssss', 'ssss@shikataramuno.com'),
-     new Member(20, 'tttt', 'tttt@shikataramuno.com'),
-     new Member(21, 'uuuu', 'uuuu@shikataramuno.com'),
-     new Member(22, 'vvvv', 'vvvv@shikataramuno.com'),
-     new Member(23, 'wwww', 'wwww@shikataramuno.com'),
-     new Member(24, 'xxxx', 'xxxx@shikataramuno.com'),
-     new Member(25, 'yyyy', 'yyyy@shikataramuno.com'),
-     new Member(26, 'zzzz', 'zzzz@shikataramuno.com'),
+     new Member(1, 'aaaa', true, 'aaaa@shikataramuno.com'),
+     new Member(2, 'bbbb', true, 'bbbb@shikataramuno.com'),
+     new Member(3, 'cccc', false, 'cccc@shikataramuno.com'),
+     new Member(4, 'dddd', false, 'dddd@shikataramuno.com'),
+     new Member(5, 'eeee', false, 'eeee@shikataramuno.com'),
+     new Member(6, 'ffff', false, 'ffff@shikataramuno.com'),
+     new Member(7, 'gggg', false, 'gggg@shikataramuno.com'),
+     new Member(8, 'hhhh', false, 'hhhh@shikataramuno.com'),
+     new Member(9, 'iiii', false, 'iiii@shikataramuno.com'),
+     new Member(10, 'jjjj', false, 'jjjj@shikataramuno.com'),
+     new Member(11, 'kkkk', false, 'kkkk@shikataramuno.com'),
+     new Member(12, 'llll', false, 'llll@shikataramuno.com'),
+     new Member(13, 'mmmm', false, 'mmmm@shikataramuno.com'),
+     new Member(14, 'nnnn', false, 'nnnn@shikataramuno.com'),
+     new Member(15, 'oooo', false, 'oooo@shikataramuno.com'),
+     new Member(16, 'pppp', false, 'pppp@shikataramuno.com'),
+     new Member(17, 'qqqq', false, 'qqqq@shikataramuno.com'),
+     new Member(18, 'rrrr', false, 'rrrr@shikataramuno.com'),
+     new Member(19, 'ssss', false, 'ssss@shikataramuno.com'),
+     new Member(20, 'tttt', false, 'tttt@shikataramuno.com'),
+     new Member(21, 'uuuu', false, 'uuuu@shikataramuno.com'),
+     new Member(22, 'vvvv', false, 'vvvv@shikataramuno.com'),
+     new Member(23, 'wwww', false, 'wwww@shikataramuno.com'),
+     new Member(24, 'xxxx', false, 'xxxx@shikataramuno.com'),
+     new Member(25, 'yyyy', false, 'yyyy@shikataramuno.com'),
+     new Member(26, 'zzzz', true, 'zzzz@shikataramuno.com'),
     ];
+    this.memberList.forEach((member) => {
+      if (member.admin) {
+        this.admins.push(member);
+      }
+    });
   }
   mounted(): void {
     console.log('mounted');
@@ -142,6 +151,14 @@ export default class ResponsiveScrollableGrid extends Vue {
   }
   edit(id: number): void {
     this.selectedId = id;
+  }
+  adminChanged(member: Member): void {
+    this.$nextTick(() => {
+      console.log('adminChanged');
+      console.log(member);
+      member.setAdmin();
+      console.log(this.admins);
+    });
   }
 }
 </script>
@@ -227,6 +244,10 @@ export default class ResponsiveScrollableGrid extends Vue {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  text-align: left;
+}
+.admin {
+  width: 200px;
   text-align: left;
 }
 .name {

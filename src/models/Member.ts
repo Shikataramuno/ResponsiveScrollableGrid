@@ -2,13 +2,16 @@ export default class Member {
   id: number = -1;
   name: string = '';
   address: string = '';
+  admin: boolean = false;
 
   constructor(
     id: number,
     name: string,
+    admin: boolean,
     address: string) {
       this.id = id;
       this.name = name;
+      this.admin = admin;
       this.address = address;
   }
 
@@ -16,6 +19,10 @@ export default class Member {
     return String(this.id).toLowerCase().indexOf(str) > -1 ||
      this.name.toLowerCase().indexOf(str) > -1 ||
      this.address.toLowerCase().indexOf(str) > -1;
+  }
+
+  setAdmin(): void {
+    this.admin = !this.admin;
   }
 
   getValue(key: string): string {
