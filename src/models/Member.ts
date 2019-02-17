@@ -3,26 +3,25 @@ export default class Member {
   name: string = '';
   address: string = '';
   admin: boolean = false;
+  progress: number = 0;
 
   constructor(
     id: number,
     name: string,
     admin: boolean,
+    progress: number,
     address: string) {
       this.id = id;
       this.name = name;
       this.admin = admin;
       this.address = address;
+      this.progress = progress;
   }
 
   isIncluded(str: string): boolean {
     return String(this.id).toLowerCase().indexOf(str) > -1 ||
      this.name.toLowerCase().indexOf(str) > -1 ||
      this.address.toLowerCase().indexOf(str) > -1;
-  }
-
-  setAdmin(): void {
-    this.admin = !this.admin;
   }
 
   getValue(key: string): string {

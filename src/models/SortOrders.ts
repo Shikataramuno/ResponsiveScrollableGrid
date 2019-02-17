@@ -2,14 +2,26 @@ export default class SortOrders {
   id: number = 1;
   name: number = 1;
   address: number = 1;
+  progress: number = 1;
+  admin: number = 1;
 
   selectKey(key: string) {
-    if (key === 'id') {
-      this.id *= -1;
-    } else if (key === 'name') {
-      this.name *= -1;
-    } else {
-      this.address *= -1;
+    switch (key) {
+      case 'id':
+        this.id *= -1;
+        break;
+      case 'name':
+        this.id *= -1;
+        break;
+      case 'address':
+        this.address *= -1;
+        break;
+      case 'progress':
+        this.progress *= -1;
+        break;
+      case 'admin':
+        this.admin *= -1;
+        break;
     }
   }
   getOrder(key: string): number {
