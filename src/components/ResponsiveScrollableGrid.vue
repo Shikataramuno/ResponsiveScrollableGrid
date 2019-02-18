@@ -52,11 +52,11 @@
           <div class="wrapper attributes data">
             <div v-for="(val, idx) in columns" v-bind:key=idx :class="[val]">
               <span class='mobile-title'>{{val}}:</span>
-              <input type="checkbox"
+              <b-form-checkbox
                 v-if="val==='admin'"
                 v-model="entry.admin"
-                v-bind:value="entry"
                 @change="adminChanged(entry)">
+              </b-form-checkbox>
               <b-progress class="mb-3" v-else-if="val==='progress'" :max="max" :value="entry.progress" show-value variant="success"/>
               <span v-else>{{entry[val]}}</span>
             </div>

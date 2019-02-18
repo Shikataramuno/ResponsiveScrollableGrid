@@ -11,7 +11,7 @@ export default class SortOrders {
         this.id *= -1;
         break;
       case 'name':
-        this.id *= -1;
+        this.name *= -1;
         break;
       case 'address':
         this.address *= -1;
